@@ -1,15 +1,26 @@
 import React, { Component } from "react";
 import Titles from "./components/Titles";
 import Form from "./components/Form";
+import Weather from "./components/Weather";
+
+const API_KEY = "ef2e6f4e69f8cefa6c7f1f5cf66d594a";
 
 class App extends Component {
-  state = {};
+  getWeather = async e => {
+    e.preventDefault();
+    const api_call = await fetch(
+      `http://api.openweathermap.org/data/2.5/weather?q=Austin,us&appid=${API_KEY}&units=imperial`
+    );
+    const data = await api_call.json();
+    console.log(data);
+  };
   render() {
     return (
       <div>
         <h3>Weather App</h3>
         <Titles />
-        <Form />
+        <Form getWeather={this.getWeather} />
+        <Weather />
       </div>
     );
   }
